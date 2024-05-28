@@ -38,13 +38,13 @@ Deben utilizar los conceptos que hemos visto durante el curso. Debajo se encuent
 
 - [Bazan, Facundo](https://github.com/facundobazan)
 - [Castaño, Joaquín]()
-- [Cruz, Alicia Cecilia]()
+- [Cruz, Alicia Cecilia](https://github.com/cruzac1985)
 - ~~Escribano, Pedro Ignacio~~
 - ~~Fretes, Soledad~~
 - [Godoy, Hector Hernan]()
 - [Navarrete Lopez, Elizabeth]()
-- [Serafini, Agustín]()
-- [Vargas, Franco]()
+- [Serafini, Agustín](https://github.com/Sera-fo)
+- [Vargas, Franco](https://github.com/Fran-04)
 
 ## Links utiles
 
@@ -75,4 +75,10 @@ merge entrega_1-gdd
 
 ```
 https://trello.com/b/3zZcv3H4/final-codo-a-codo-grupo-1
+```
+
+#### [Discord](https://discord.gg/UyhW7ttx)
+
+```
+https://discord.gg/UyhW7ttx
 ```
