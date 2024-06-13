@@ -21,7 +21,7 @@ Deben utilizar los conceptos que hemos visto durante el curso. Debajo se encuent
 - Pueden usar recursos de Internet como modelos, scripts y audios de la asset store pero deben ser citados en un documento de texto separado que entregarán con el resto de su proyecto.
 - El proyecto puede ser 2D, 2.5D o 3D.
 
-## Entregas:
+### Entregas
 
 |N° de entrega|Contenido|N° de clase|Fecha de límite|
 |:-:|-|:-:|-|
