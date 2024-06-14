@@ -29,30 +29,38 @@ public class PlayerController : MonoBehaviour
         }
 
         //Player
-        _inputSystem.Player.Action.performed += ctx => { OnAction(ctx); };
-        _inputSystem.Player.Duck.performed += ctx => { ChangeVelocity(_duckingSpeed); };
+        _inputSystem.Player.Action.performed += ctx => OnAction(ctx);
 
-        _inputSystem.Player.Jump.performed += ctx => { OnJump(ctx); };
+        _inputSystem.Player.Duck.performed += ctx =>
+        {
+            _currentSpeed = _currentSpeed != _duckingSpeed ? _duckingSpeed : _walkingSpeed;
+        };
 
-        _inputSystem.Player.Move.canceled += ctx => { OnCancelMove(ctx); };
-        _inputSystem.Player.Move.performed += ctx => { OnMove(ctx); };
+        _inputSystem.Player.Jump.performed += ctx => OnJump(ctx);
 
-        _inputSystem.Player.Run.canceled += ctx => _currentSpeed = _walkingSpeed;
-        _inputSystem.Player.Run.performed += ctx => _currentSpeed = _runningSpeed;
+        //_inputSystem.Player.Move.canceled += ctx => _move = Vector2.zero;
+        _inputSystem.Player.Move.performed += ctx => OnMove(ctx);
+
+        _inputSystem.Player.Run.canceled += ctx =>
+        {
+            _currentSpeed = _walkingSpeed;
+        };
+        _inputSystem.Player.Run.performed += ctx =>
+        {
+            _currentSpeed = _runningSpeed;
+        };
         //UI
-        _inputSystem.UI.Inventary.performed += ctx => { Inventary(ctx); };
-        _inputSystem.UI.Map.performed += ctx => { Map(ctx); };
-        _inputSystem.UI.Pause.performed += ctx => { Pause(ctx); };
+        _inputSystem.UI.Inventary.performed += ctx => Inventary(ctx);
+        _inputSystem.UI.Map.performed += ctx => Map(ctx);
+        _inputSystem.UI.Pause.performed += ctx => Pause(ctx);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_move != Vector2.zero)
-        {
-            Rotate();
-            Move();
-        }
+        Rotate();
+        Move();
+
         //OnMove();
         //_move = _inputSystem.Player.Move.ReadValue<Vector2>();
         //Debug.Log(_move);
@@ -61,19 +69,13 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("Run", _inputSystem.Player.Run.ReadValue<float>() == 1 ? true : false);*/
     }
 
-    private void OnCancelMove(InputAction.CallbackContext context)
-    {
-        _move = Vector2.zero;
-        _currentSpeed = 0.0f;
-    }
-
     private void OnMove(InputAction.CallbackContext context)
     {
         _move = _inputSystem.Player.Move.ReadValue<Vector2>();
 
-        Rotate();
+        //Rotate();
 
-        Move();
+        //Move();
     }
 
     private void Rotate()
@@ -94,11 +96,6 @@ public class PlayerController : MonoBehaviour
         //TODO: falta implementar Action
     }
 
-    private void OnCancelRun(InputAction.CallbackContext context)
-    {
-        _currentSpeed = _walkingSpeed;
-    }
-
     private void OnDuck(InputAction.CallbackContext context)
     {
         if (_currentSpeed != _duckingSpeed)
@@ -110,22 +107,6 @@ public class PlayerController : MonoBehaviour
     private void OnJump(InputAction.CallbackContext context)
     {
         //TODO: falta implementar Jump
-    }
-
-    private void OnRun(InputAction.CallbackContext context)
-    {
-        if (_currentSpeed != _duckingSpeed)
-            _currentSpeed = _duckingSpeed;
-        else
-            _currentSpeed = _walkingSpeed;
-    }
-
-    private void ChangeVelocity(float velocity)
-    {
-        if (_currentSpeed != velocity)
-            _currentSpeed = velocity;
-        else
-            _currentSpeed = _walkingSpeed;
     }
 
     private void Pause(InputAction.CallbackContext context)
