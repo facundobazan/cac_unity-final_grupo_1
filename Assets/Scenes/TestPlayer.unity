@@ -316,6 +316,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2734889178963087196, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4844383083711658693, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Name
       value: Noah
