@@ -3,31 +3,25 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float _rotateSpeed = 5f;
-    [SerializeField]
-    private float _walkingSpeed = 5f;
-    [SerializeField]
-    private float _runningSpeed = 7f;
-    [SerializeField]
-    private float _crouchingSpeed = 3f;
-
     private InputControls _inputSystem;
     private CharacterController _characterController;
-    private Animator _animator;
 
+    [SerializeField]
+    private float _rotateSpeed = 5.0f;
+    [SerializeField]
+    private float _duckingSpeed = 3.0f;
+    [SerializeField]
+    private float _walkingSpeed = 5.0f;
+    [SerializeField]
+    private float _runningSpeed = 7.0f;
+
+    private float _currentSpeed = 0.0f;
     private Vector2 _move = Vector2.zero;
-    private float _currentSpeed = 0f;
-    private bool _isRunning = false;
-    private bool _isDucking = false;
-    private bool _illuminate = false;
-    private bool _isJumping = false;
 
     public void Awake()
     {
         _inputSystem = new InputControls();
         _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
 
         if (_inputSystem == null)
         {
@@ -36,21 +30,15 @@ public class PlayerController : MonoBehaviour
 
         //Player
         _inputSystem.Player.Action.performed += ctx => { OnAction(ctx); };
+        _inputSystem.Player.Duck.performed += ctx => { ChangeVelocity(_duckingSpeed); };
 
-        //_inputSystem.Player.Duck.canceled += ctx => _isDucking = false;
-        _inputSystem.Player.Duck.performed += ctx => { OnDuck(ctx); };
-
-        //_inputSystem.Player.Jump.canceled += ctx => _isJumping = false;
         _inputSystem.Player.Jump.performed += ctx => { OnJump(ctx); };
 
-        //_inputSystem.Player.Lamp.canceled += ctx => _useLamp = false;
-        _inputSystem.Player.Lamp.performed += ctx => { OnLamp(ctx); };
-
-        _inputSystem.Player.Move.canceled += ctx => _move = Vector2.zero;
+        _inputSystem.Player.Move.canceled += ctx => { OnCancelMove(ctx); };
         _inputSystem.Player.Move.performed += ctx => { OnMove(ctx); };
 
-        _inputSystem.Player.Run.canceled += ctx => _isRunning = false;
-        _inputSystem.Player.Run.performed += ctx => { OnRun(ctx); };
+        _inputSystem.Player.Run.canceled += ctx => _currentSpeed = _walkingSpeed;
+        _inputSystem.Player.Run.performed += ctx => _currentSpeed = _runningSpeed;
         //UI
         _inputSystem.UI.Inventary.performed += ctx => { Inventary(ctx); };
         _inputSystem.UI.Map.performed += ctx => { Map(ctx); };
@@ -60,17 +48,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_move != Vector2.zero)
+        {
+            Rotate();
+            Move();
+        }
         //OnMove();
         //_move = _inputSystem.Player.Move.ReadValue<Vector2>();
         //Debug.Log(_move);
 
-
-
-
-
-        SetAnimator();
         /*_animator.SetBool("Duck", _inputSystem.Player.Duck.ReadValue<float>() == 1 ? true : false);
         _animator.SetBool("Run", _inputSystem.Player.Run.ReadValue<float>() == 1 ? true : false);*/
+    }
+
+    private void OnCancelMove(InputAction.CallbackContext context)
+    {
+        _move = Vector2.zero;
+        _currentSpeed = 0.0f;
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -95,76 +89,58 @@ public class PlayerController : MonoBehaviour
         _characterController.SimpleMove(forward * _currentSpeed * _move.y);
     }
 
-    private void SetAnimator()
-    {
-        _animator.SetFloat("VelX", _move.x);
-        _animator.SetFloat("VelY", _move.y);
-        _animator.SetBool("Run", _isRunning);
-        _animator.SetBool("Duck", _isDucking);
-
-        //_animator.SetBool("Duck", _isRunning ? false : _isDucking);
-        //_animator.SetBool("useLamp", _illuminate);
-    }
-
     private void OnAction(InputAction.CallbackContext context)
     {
-        //Debug.Log("Action");
-        _animator.Play("Action");
+        //TODO: falta implementar Action
+    }
+
+    private void OnCancelRun(InputAction.CallbackContext context)
+    {
+        _currentSpeed = _walkingSpeed;
     }
 
     private void OnDuck(InputAction.CallbackContext context)
     {
-        //Debug.Log("Duck");
-        _isDucking = !_isDucking;
-
-        if (_isDucking)
-        {
-            if (_isRunning) _isRunning = false;
-
-            _animator.Play("Blend Down");
-            _currentSpeed = _crouchingSpeed;
-        }
+        if (_currentSpeed != _duckingSpeed)
+            _currentSpeed = _duckingSpeed;
         else
-            _animator.Play("Get Up");
-
+            _currentSpeed = _walkingSpeed;
     }
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        //Debug.Log("Jump");
-        //TODO: generar salto
-        _animator.Play("Jump");
-    }
-
-    private void OnLamp(InputAction.CallbackContext context)
-    {
-        //Debug.Log("Lamp");
-        _illuminate = !_illuminate;
-        _animator.Play(_illuminate ? "Illuminate" : "Deillumine");
+        //TODO: falta implementar Jump
     }
 
     private void OnRun(InputAction.CallbackContext context)
     {
-        //Debug.Log("Run");
-        if (_isDucking) return;
+        if (_currentSpeed != _duckingSpeed)
+            _currentSpeed = _duckingSpeed;
+        else
+            _currentSpeed = _walkingSpeed;
+    }
 
-        _isRunning = true;
-        _currentSpeed = _runningSpeed;
+    private void ChangeVelocity(float velocity)
+    {
+        if (_currentSpeed != velocity)
+            _currentSpeed = velocity;
+        else
+            _currentSpeed = _walkingSpeed;
     }
 
     private void Pause(InputAction.CallbackContext context)
     {
-        Debug.Log("Pause");
+        //TODO: falta implementar Pause
     }
 
     private void Inventary(InputAction.CallbackContext context)
     {
-        Debug.Log("Inventary");
+        //TODO: falta implementar Inventary
     }
 
     private void Map(InputAction.CallbackContext context)
     {
-        Debug.Log("Map");
+        //TODO: falta implementar Map
     }
 
 
