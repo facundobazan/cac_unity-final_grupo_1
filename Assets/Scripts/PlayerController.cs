@@ -58,8 +58,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rotate();
-        Move();
+        //Rotate();
+        //Move();
 
         //OnMove();
         //_move = _inputSystem.Player.Move.ReadValue<Vector2>();
@@ -67,11 +67,30 @@ public class PlayerController : MonoBehaviour
 
         /*_animator.SetBool("Duck", _inputSystem.Player.Duck.ReadValue<float>() == 1 ? true : false);
         _animator.SetBool("Run", _inputSystem.Player.Run.ReadValue<float>() == 1 ? true : false);*/
+
+        //_move = _inputSystem.Player.Move.ReadValue<Vector2>();
+
+        //transform.Rotate(0, _move.x * _rotateSpeed, 0);
+
+        //Vector3 forward = transform.TransformDirection(Vector3.forward);
+        //float speed = _currentSpeed * _move.y;
+
+        //_characterController.SimpleMove(forward * _currentSpeed * _move.y);
+
+        _move = _characterController.isGrounded ? _move : Vector2.zero;
+
+    }
+
+    private void FixedUpdate()
+    {
+        transform.Rotate(0, _move.x * _rotateSpeed, 0);
+
+        _characterController.Move(new Vector3(_move.x, 0, _move.y) * _currentSpeed * Time.deltaTime);
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        _move = _inputSystem.Player.Move.ReadValue<Vector2>();
+        //_move = _inputSystem.Player.Move.ReadValue<Vector2>();
 
         //Rotate();
 

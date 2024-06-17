@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,7 @@ public class AnimationStateController : MonoBehaviour
 {
     private Animator _animator;
     private InputControls _inputSystem;
+    private GameObject _phone;
 
     private Vector2 _move = Vector2.zero;
     private float _currentMaxSpeed = 0.0f;
@@ -17,20 +19,20 @@ public class AnimationStateController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _inputSystem = new InputControls();
+        _phone = GameObject.Find("Phone");
 
         InitializeControls();
     }
 
     void Start()
     {
+        _phone.SetActive(false);
         _currentMaxSpeed = _maxWalkingSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         _animator.SetFloat("VecX", _move.x * _currentMaxSpeed);
         _animator.SetFloat("VecZ", _move.y * _currentMaxSpeed);
         _animator.SetBool("Duck", _isDucking);
@@ -46,13 +48,19 @@ public class AnimationStateController : MonoBehaviour
 
         _inputSystem.Player.Jump.performed += ctx => { OnJump(ctx); };
 
-        _inputSystem.Player.Lamp.performed += ctx => _illuminate = !_illuminate;
+        _inputSystem.Player.Lamp.performed += ctx => { OnLamp(ctx); };
 
         _inputSystem.Player.Move.canceled += ctx => _move = Vector2.zero;
         _inputSystem.Player.Move.performed += ctx => _move = _inputSystem.Player.Move.ReadValue<Vector2>();
 
         _inputSystem.Player.Run.canceled += ctx => _currentMaxSpeed = _maxWalkingSpeed;
         _inputSystem.Player.Run.performed += ctx => _currentMaxSpeed = _maxRunningSpeed;
+    }
+
+    private void OnLamp(InputAction.CallbackContext ctx)
+    {
+        _illuminate = !_illuminate;
+        _phone.SetActive(_illuminate);
     }
 
     private void OnEnable()
