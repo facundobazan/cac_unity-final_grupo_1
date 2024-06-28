@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AnimationStateController : MonoBehaviour
 {
     private Animator _animator;
-    private InputControls _inputSystem;
+    private InputControls _input;
     private GameObject _phone;
 
     private Vector2 _move = Vector2.zero;
@@ -17,8 +16,9 @@ public class AnimationStateController : MonoBehaviour
 
     void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _inputSystem = new InputControls();
+        _animator = _animator ?? GetComponent<Animator>();
+        _animator.applyRootMotion = false;
+        _input = _input ?? new InputControls();
         _phone = GameObject.Find("Phone");
 
         InitializeControls();
@@ -42,19 +42,19 @@ public class AnimationStateController : MonoBehaviour
     private void InitializeControls()
     {
         // Player
-        _inputSystem.Player.Action.performed += ctx => { OnAction(ctx); };
+        _input.Player.Action.performed += ctx => { OnAction(ctx); };
 
-        _inputSystem.Player.Duck.performed += ctx => _isDucking = !_isDucking;
+        _input.Player.Duck.performed += ctx => _isDucking = !_isDucking;
 
-        _inputSystem.Player.Jump.performed += ctx => { OnJump(ctx); };
+        _input.Player.Jump.performed += ctx => { OnJump(ctx); };
 
-        _inputSystem.Player.Lamp.performed += ctx => { OnLamp(ctx); };
+        _input.Player.Lamp.performed += ctx => { OnLamp(ctx); };
 
-        _inputSystem.Player.Move.canceled += ctx => _move = Vector2.zero;
-        _inputSystem.Player.Move.performed += ctx => _move = _inputSystem.Player.Move.ReadValue<Vector2>();
+        _input.Player.Move.canceled += ctx => _move = Vector2.zero;
+        _input.Player.Move.performed += ctx => _move = _input.Player.Move.ReadValue<Vector2>();
 
-        _inputSystem.Player.Run.canceled += ctx => _currentMaxSpeed = _maxWalkingSpeed;
-        _inputSystem.Player.Run.performed += ctx => _currentMaxSpeed = _maxRunningSpeed;
+        _input.Player.Run.canceled += ctx => _currentMaxSpeed = _maxWalkingSpeed;
+        _input.Player.Run.performed += ctx => _currentMaxSpeed = _maxRunningSpeed;
     }
 
     private void OnLamp(InputAction.CallbackContext ctx)
@@ -65,28 +65,32 @@ public class AnimationStateController : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputSystem.Player.Action.Enable();
-        _inputSystem.Player.Duck.Enable();
-        _inputSystem.Player.Jump.Enable();
-        _inputSystem.Player.Lamp.Enable();
-        _inputSystem.Player.Move.Enable();
-        _inputSystem.Player.Run.Enable();
-        _inputSystem.UI.Pause.Enable();
-        _inputSystem.UI.Inventary.Enable();
-        _inputSystem.UI.Map.Enable();
+        _input.Player.Action.Enable();
+        _input.Player.Duck.Enable();
+        _input.Player.Jump.Enable();
+        _input.Player.Lamp.Enable();
+        _input.Player.Move.Enable();
+        _input.Player.Run.Enable();
+        /*_input.UI.Pause.Enable();
+        _input.UI.Inventary.Enable();
+        _input.UI.Map.Enable();
+        _input.Camera.View.Enable();
+        _input.Camera.Zoom.Enable();*/
     }
 
     private void OnDisable()
     {
-        _inputSystem.Player.Action.Disable();
-        _inputSystem.Player.Duck.Disable();
-        _inputSystem.Player.Jump.Disable();
-        _inputSystem.Player.Lamp.Disable();
-        _inputSystem.Player.Move.Disable();
-        _inputSystem.Player.Run.Disable();
-        _inputSystem.UI.Pause.Disable();
-        _inputSystem.UI.Inventary.Disable();
-        _inputSystem.UI.Map.Disable();
+        _input.Player.Action.Disable();
+        _input.Player.Duck.Disable();
+        _input.Player.Jump.Disable();
+        _input.Player.Lamp.Disable();
+        _input.Player.Move.Disable();
+        _input.Player.Run.Disable();
+        /*_input.UI.Pause.Disable();
+        _input.UI.Inventary.Disable();
+        _input.UI.Map.Disable();
+        _input.Camera.View.Disable();
+        _input.Camera.Zoom.Disable();*/
     }
 
     private void OnAction(InputAction.CallbackContext context)
