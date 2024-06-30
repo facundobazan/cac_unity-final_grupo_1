@@ -1,21 +1,20 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    private Transform _target;
-    [SerializeField]
-    [Range(0, 1)]
-    private float _lerpValue;
-    [SerializeField]
-    private Vector3 _offset = Vector3.zero;
+    [SerializeField] private Transform _target;
+    [SerializeField][Range(0, 1)] private float _lerpValue;
+    [SerializeField] private Vector3 _offset = new Vector3(0f, -1.5f, 0f);
+    [SerializeField] private float _cameraHeight = 4f;
     private Vector2 _cameraRotation = Vector2.zero;
-    private float _cameraZoom = 0.0f;
-    private int _maxCameraZoom = 5;
+    private float _cameraZoom = 1.0f;
+    private int _maxCameraZoom = -3;
     private int _minCameraZoom = 0;
     private Vector2 _relativeDirection;
+    private Vector3 _initialPosition;
     private Vector3 _cameraPosition = Vector3.zero;
     private Vector3 _amount = Vector3.zero;
     private float _sensitivity = 10.0f;
@@ -27,6 +26,7 @@ public class CameraController : MonoBehaviour
     {
         _input = new InputControls();
         _target = GameObject.Find("Noah").transform;
+        UpdateCamera(transform, out _initialPosition);
     }
 
     private void Start()
@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 
     private void InitializeInput()
     {
-        _input.Camera.View.performed += ctx => { OnRotate(ctx); };
+        //_input.Camera.View.performed += ctx => { OnRotate(ctx); };
         _input.Camera.Zoom.performed += ctx => { OnZoom(ctx); };
     }
 
@@ -47,30 +47,35 @@ public class CameraController : MonoBehaviour
 
     private void OnZoom(InputAction.CallbackContext ctx)
     {
-        _cameraZoom = ctx.ReadValue<float>() > 0 ? 1 : -1;
 
-        if (_cameraZoom > _maxCameraZoom) _cameraZoom = _maxCameraZoom;
-        else if (_cameraZoom < 0) _cameraZoom = _minCameraZoom;
+        if (ctx.ReadValue<Vector2>().y > 0)
+        {
+            if (_offset.z <= _maxCameraZoom && _offset.z >= _minCameraZoom) _offset.z -= 0.1f;
+        }
+        else
+        {
+            if (_offset.z >= _maxCameraZoom && _offset.z <= _minCameraZoom) _offset.z -= -0.1f;
+        }
+
     }
-
-    private void Update()
-    { }
 
     private void LateUpdate()
     {
-        //transform.position = Vector3.Lerp(transform.position, _target.position + _offset, _lerpValue);
-        //transform.LookAt(_target.position);
-
-        _mouseDelta.Set(_cameraRotation.x, _cameraRotation.y, 0f);
-        _amount += _mouseDelta * _sensitivity;
-        _amount.z = Mathf.Clamp(_amount.z, 50, 300);
-        _amount.y = Mathf.Clamp(_amount.y, -89, 89);
-
-        _cameraPosition = Quaternion.AngleAxis(_amount.x, Vector3.up) * Quaternion.AngleAxis(_amount.y, Vector3.right) * Vector3.forward;
-        _cameraPosition *= _amount.z * 0.1f;
-        _cameraPosition += _target.transform.position;
+        UpdateCamera(ref _cameraPosition);
         transform.position = _cameraPosition;
-        transform.LookAt(_target.transform.position);
+        transform.LookAt(_target.transform.position - _offset);
+    }
+
+    private void UpdateCamera(ref Vector3 camera)
+    {
+        camera.x = _initialPosition.x + _target.position.x + _offset.x;
+        camera.z = _initialPosition.z + _target.position.z + _offset.z;
+        camera.y = _offset.y + _cameraHeight;
+    }
+
+    private void UpdateCamera(in Transform camera, out Vector3 initialPosition)
+    {
+        initialPosition = camera.position;
     }
 
     private void OnEnable()
@@ -85,11 +90,3 @@ public class CameraController : MonoBehaviour
         _input.Camera.Zoom.Disable();
     }
 }
-
-/*
-Para obtener un componente del mismo objeto transform, debe ser creada la variable antes y obtener la instancia en el start
-ej:
-public BoxCollider collider;
-
-void Start(){collider = GetComponent<BoxCollider>();}
-*/

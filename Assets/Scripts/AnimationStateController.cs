@@ -100,6 +100,6 @@ public class AnimationStateController : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        _animator.Play("Jump");
+        if (!_isDucking) _animator.Play("Jump");
     }
 }

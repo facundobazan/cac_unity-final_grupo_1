@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientSkyColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  m_AmbientEquatorColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -204,7 +204,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -222,14 +222,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106276943}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a267440d0a6016a7fb364b60c11797c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 704998177}
   _lerpValue: 0.2
-  _offset: {x: 0, y: 2.5, z: -4.5}
+  _offset: {x: 0, y: -1.5, z: 0}
+  _cameraHeight: 4
 --- !u!1 &283745850
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +652,38 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Color.b
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Color.g
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Color.r
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_Intensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167690478356766788, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5186363259373399069, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -841,7 +874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8301744319085056842, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Height
-      value: 2
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 8301744319085056842, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Radius
@@ -857,7 +890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8301744319085056842, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Center.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8301744319085056842, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Center.z
@@ -1073,7 +1106,7 @@ Transform:
   m_GameObject: {fileID: 1468147010}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.56}
+  m_LocalPosition: {x: 0, y: 0, z: -0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

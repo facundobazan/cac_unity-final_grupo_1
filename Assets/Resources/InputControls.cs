@@ -40,7 +40,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""name"": ""Zoom"",
                     ""type"": ""Value"",
                     ""id"": ""03273b0c-98c8-42a7-94bd-e962607c4e91"",
-                    ""expectedControlType"": ""Delta"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -60,7 +60,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""07b8ea3d-8687-46b7-a903-579c3b328963"",
+                    ""id"": ""d959641b-9f7d-4600-8ca1-0f608bfa5f8c"",
                     ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",

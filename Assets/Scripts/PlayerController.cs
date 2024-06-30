@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         //Player
         _input.Player.Action.performed += ctx => OnAction(ctx);
         _input.Player.Duck.performed += ctx => _isCrouched = !_isCrouched;
+        _input.Player.Jump.canceled += ctx => _isJumping = false;
         _input.Player.Jump.performed += ctx => OnJump(ctx);
         _input.Player.Move.canceled += ctx => _move = Vector3.zero;
         _input.Player.Move.performed += ctx => OnMove(ref _move, _input.Player.Move.ReadValue<Vector2>());
@@ -50,7 +51,18 @@ public class PlayerController : MonoBehaviour
         //if (_move.z > 0) transform.LookAt();
         //if (_move.z < 0) transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,  -transform.localScale.z);
 
-        _isJumping = false;
+        //_isJumping = false;
+        if (_move.magnitude >= 0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0,
+             Mathf.Atan2(_move.x, _move.z) * Mathf.Rad2Deg,
+            0);
+
+            if (_move.z < 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+            else if (_move.z > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+        }
 
         if (_isCrouched) _currentSpeed = _duckingSpeed;
         else _currentSpeed = _isRunning ? _runningSpeed : _walkingSpeed;
