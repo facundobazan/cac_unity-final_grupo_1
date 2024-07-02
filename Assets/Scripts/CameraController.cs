@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         _input = new InputControls();
-        _target = GameObject.Find("Noah").transform;
+        _target = GameObject.Find("Player").transform;
         UpdateCamera(transform, out _initialPosition);
     }
 

@@ -1,4 +1,4 @@
-using TreeEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,15 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     private InputControls _input;
     private CharacterController _characterController;
+    [SerializeField] private GameObject _phone;
 
-    [SerializeField]
-    private float _rotateSpeed = 5.0f;
-    [SerializeField]
-    private float _duckingSpeed = 3.0f;
-    [SerializeField]
-    private float _walkingSpeed = 5.0f;
-    [SerializeField]
-    private float _runningSpeed = 7.0f;
+    [SerializeField] private float _rotateSpeed = 5.0f;
+    [SerializeField] private float _duckingSpeed = 3.0f;
+    [SerializeField] private float _walkingSpeed = 5.0f;
+    [SerializeField] private float _runningSpeed = 7.0f;
 
     private float _currentSpeed = 0.0f;
     private Vector3 _move = Vector3.zero;
@@ -28,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         _input = _input ?? new InputControls();
         _characterController = GetComponent<CharacterController>();
+        _phone.SetActive(false);
 
         //Player
         _input.Player.Action.performed += ctx => OnAction(ctx);
@@ -38,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _input.Player.Move.performed += ctx => OnMove(ref _move, _input.Player.Move.ReadValue<Vector2>());
         _input.Player.Run.canceled += ctx => _isRunning = false;
         _input.Player.Run.performed += ctx => _isRunning = true;
+        _input.Player.Lamp.performed += ctx => _phone.SetActive(!_phone.activeSelf);
         //UI
         _input.UI.Inventary.performed += ctx => Inventary(ctx);
         _input.UI.Map.performed += ctx => Map(ctx);
@@ -52,6 +51,7 @@ public class PlayerController : MonoBehaviour
         //if (_move.z < 0) transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,  -transform.localScale.z);
 
         //_isJumping = false;
+
         if (_move.magnitude >= 0.1f)
         {
             transform.rotation = Quaternion.Euler(0,

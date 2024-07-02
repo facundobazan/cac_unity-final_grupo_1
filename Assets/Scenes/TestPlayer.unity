@@ -20,9 +20,9 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  m_AmbientEquatorColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
-  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientSkyColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+  m_AmbientEquatorColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+  m_AmbientGroundColor: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
@@ -231,6 +231,11 @@ MonoBehaviour:
   _lerpValue: 0.2
   _offset: {x: 0, y: -1.5, z: 0}
   _cameraHeight: 4
+--- !u!1 &114434852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5729574910512911596, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+  m_PrefabInstance: {fileID: 1068838423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &283745850
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +554,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2734889178963087196, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
+      propertyPath: _phone
+      value: 
+      objectReference: {fileID: 114434852}
+    - target: {fileID: 2734889178963087196, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -646,7 +655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844383083711658693, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Name
-      value: Noah
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4844383083711658693, guid: 812d2d90e8e05c8f39da8ff84b77c0ef, type: 3}
       propertyPath: m_Layer
