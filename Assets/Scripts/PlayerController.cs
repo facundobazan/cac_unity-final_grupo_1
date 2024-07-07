@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     private bool _groundedPlayer = false;
 
 
-    private float _currentAngle = 0.0f;
-    private float _currentAngleVelocity;
+    //private float _currentAngle = 0.0f;
+    //private float _currentAngleVelocity;
 
     public void Awake()
     {

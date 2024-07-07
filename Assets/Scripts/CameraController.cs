@@ -10,15 +10,15 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 _offset = new Vector3(0f, -1.5f, 0f);
     [SerializeField] private float _cameraHeight = 4f;
     private Vector2 _cameraRotation = Vector2.zero;
-    private float _cameraZoom = 1.0f;
+    //private float _cameraZoom = 1.0f;
     private int _maxCameraZoom = -3;
     private int _minCameraZoom = 0;
     private Vector2 _relativeDirection;
     private Vector3 _initialPosition;
     private Vector3 _cameraPosition = Vector3.zero;
-    private Vector3 _amount = Vector3.zero;
-    private float _sensitivity = 10.0f;
-    private Vector3 _mouseDelta = Vector3.zero;
+    //private Vector3 _amount = Vector3.zero;
+    //private float _sensitivity = 10.0f;
+    //private Vector3 _mouseDelta = Vector3.zero;
 
     private InputControls _input;
 
